@@ -1,0 +1,10 @@
+{
+  "name": "@gqlfw/database",
+  "scripts": {
+    "dev": "docker-compose up",
+    "migrate": "pnpm exec dotenv -- pnpm exec graphile-migrate"
+  },
+  "dependencies": {
+    "graphile-migrate": "^1.4.1"
+  }
+}

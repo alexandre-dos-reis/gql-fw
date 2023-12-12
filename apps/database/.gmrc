@@ -1,0 +1,30 @@
+{
+  "pgSettings": {
+    // "search_path": "app_public,app_private,app_hidden,public",
+  },
+  "placeholders": {
+    ":POSTGRAPHILE_ANON_ROLE": "!ENV",
+    ":POSTGRAPHILE_USER_ROLE": "!ENV"
+  },
+
+  "afterReset": [
+    "!afterReset.sql",
+    // { "_": "sql", "command": "graphile-worker --schema-only" },
+  ],
+ 
+  "afterAllMigrations": [
+    // {
+    //   "_": "command",
+    //   "shadow": true,
+    //   "command": "if [ \"$IN_TESTS\" != \"1\" ]; then ./scripts/dump-db; fi",
+    // },
+  ],
+  "afterCurrent": [
+    // {
+    //   "_": "command",
+    //   "shadow": true,
+    //   "command": "if [ \"$IN_TESTS\" = \"1\" ]; then ./scripts/test-seed; fi",
+    // },
+  ],
+
+}
