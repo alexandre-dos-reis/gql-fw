@@ -4,7 +4,7 @@
   },
   "placeholders": {
     ":POSTGRAPHILE_ANON_ROLE": "!ENV",
-    ":POSTGRAPHILE_USER_ROLE": "!ENV"
+    ":POSTGRAPHILE_PERSON_ROLE": "!ENV"
   },
 
   "afterReset": [
