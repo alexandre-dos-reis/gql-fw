@@ -1,9 +1,10 @@
 {
-  "name": "@gqlfw/core",
+  "name": "root",
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "pnpm exec dotenv -- turbo dev",
+    "migrate": "pnpm exec dotenv -- pnpm --filter database run migrate"
   },
   "keywords": [],
   "author": "",

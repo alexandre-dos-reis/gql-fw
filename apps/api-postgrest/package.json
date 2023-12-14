@@ -1,0 +1,9 @@
+{
+  "name": "api-postgrest",
+  "scripts": {
+    "dev": "sleep 2 && docker compose up"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

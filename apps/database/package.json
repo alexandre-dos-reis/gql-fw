@@ -1,17 +1,10 @@
 {
-  "name": "@gqlfw/database",
+  "name": "database",
   "scripts": {
-    "dev": "concurrently -n postgres,postgraphile -c blue,magenta \"docker-compose up\" \"sleep 2 && pnpm run postgraphile --watch\"",
-    "postgraphile": "pnpm exec dotenv -- pnpm exec postgraphile",
-    "migrate": "pnpm exec dotenv -- pnpm exec graphile-migrate"
+    "dev": "docker-compose up",
+    "migrate": "pnpm exec graphile-migrate"
   },
   "dependencies": {
-    "@graphile/simplify-inflection": "8.0.0-beta.3",
-    "graphile-config": "0.0.1-beta.3",
-    "graphile-migrate": "^1.4.1",
-    "postgraphile": "5.0.0-beta.17"
-  },
-  "devDependencies": {
-    "concurrently": "^8.2.2"
+    "graphile-migrate": "^1.4.1"
   }
 }

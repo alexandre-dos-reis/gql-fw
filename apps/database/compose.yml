@@ -11,4 +11,3 @@ services:
       - ./init:/docker-entrypoint-initdb.d
     networks:
       - "@gqlfw"
-    env_file: .env

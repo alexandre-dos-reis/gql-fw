@@ -3,8 +3,10 @@
     // "search_path": "app_public,app_private,app_hidden,public",
   },
   "placeholders": {
-    ":POSTGRAPHILE_ANON_ROLE": "!ENV",
-    ":POSTGRAPHILE_PERSON_ROLE": "!ENV"
+    ":ANON_ROLE": "!ENV",
+    ":PERSON_ROLE": "!ENV",
+    ":PUBLIC_SCHEMA": "!ENV",
+    ":PRIVATE_SCHEMA": "!ENV"
   },
 
   "afterReset": [

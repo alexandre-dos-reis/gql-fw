@@ -12,8 +12,8 @@ const isEnvDev = process.env.NODE_ENV === "development";
 export default {
   extends: [
     PostGraphileAmberPreset,
-    // PostGraphileRelayPreset,
     PgSimplifyInflectionPreset,
+    // PostGraphileRelayPreset,
     PgLazyJWTPreset,
   ],
   plugins: [
@@ -23,9 +23,6 @@ export default {
 
       inflection: {
         replace: {
-          nodeIdFieldName() {
-            return "id";
-          },
           attribute(previous, options, details) {
             const name = previous.call(this, details);
             if (name === "rowId") return "id";

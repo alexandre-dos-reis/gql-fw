@@ -2,8 +2,8 @@
 -- https://github.com/graphile/starter/blob/main/%40app/db/migrations/committed/000001.sql
 --
 -- Env vars available: 
--- - POSTGRAPHILE_ANON_ROLE: Role used by postgraphile to anonymous user.
--- - POSTGRAPHILE_PERSON_ROLE: Role used bu postgrftaphile to an authenticated user.
+-- - ANON_ROLE: Role used by postgraphile to anonymous user.
+-- - PERSON_ROLE: Role used bu postgrftaphile to an authenticated user.
 
 -- Common extensions
 CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
@@ -12,8 +12,8 @@ CREATE EXTENSION IF NOT EXISTS citext WITH SCHEMA public;
 CREATE EXTENSION IF NOT EXISTS pgcrypto WITH SCHEMA public;
 
 -- Reset
-drop schema if exists app_public cascade;
-drop schema if exists app_private cascade;
+drop schema if exists :PUBLIC_SCHEMA cascade;
+drop schema if exists :PRIVATE_SCHEMA cascade;
 revoke all on schema public from public;
 alter default privileges revoke all on sequences from public;
 alter default privileges revoke all on functions from public;
@@ -21,26 +21,25 @@ alter default privileges revoke all on functions from public;
 grant all on schema public to :DATABASE_OWNER;
 
 /*
- * Read about our app_public/app_hidden/app_private schemas here:
+ * Read about our :PUBLIC_SCHEMA/app_hidden/:PRIVATE_SCHEMA schemas here:
  * https://www.graphile.org/postgraphile/namespaces/#advice
  *
- * app_public - tables and functions to be exposed to GraphQL (or any other system) - it's the public interface for. This is the main part of your database.
- * app_hidden - same privileges as app_public, but it's not intended to be exposed publicly. It's like "implementation details" of your app_public schema. You may not need it often.
- * app_private - SUPER SECRET STUFF 🕵️ No-one should be able to read this without a SECURITY DEFINER function letting them selectively do things. This is where you store passwords (bcrypted), access tokens (hopefully encrypted), etc. It should be impossible (thanks to RBAC (GRANT/REVOKE)) for web users to access this.
+ * :PUBLIC_SCHEMA - tables and functions to be exposed to GraphQL (or any other system) - it's the public interface for. This is the main part of your database.
+ * :PRIVATE_SCHEMA - SUPER SECRET STUFF 🕵️ No-one should be able to read this without a SECURITY DEFINER function letting them selectively do things. This is where you store passwords (bcrypted), access tokens (hopefully encrypted), etc. It should be impossible (thanks to RBAC (GRANT/REVOKE)) for web users to access this.
  */
-create schema app_public;
-create schema app_private;
+create schema :PUBLIC_SCHEMA;
+create schema :PRIVATE_SCHEMA;
 
-grant usage on schema public, app_public to :POSTGRAPHILE_PERSON_ROLE;
-grant usage on schema app_public to :POSTGRAPHILE_ANON_ROLE;
+grant usage on schema public, :PUBLIC_SCHEMA to :PERSON_ROLE;
+grant usage on schema :PUBLIC_SCHEMA to :ANON_ROLE;
 
-alter default privileges in schema public, app_public grant usage, select on sequences to :POSTGRAPHILE_PERSON_ROLE;
-alter default privileges in schema public, app_public grant execute on functions to :POSTGRAPHILE_PERSON_ROLE;
+alter default privileges in schema public, :PUBLIC_SCHEMA grant usage, select on sequences to :PERSON_ROLE;
+alter default privileges in schema public, :PUBLIC_SCHEMA grant execute on functions to :PERSON_ROLE;
 
 /*
  * Function update_at
  */
-create function app_private.set_updated_at() returns trigger as $$
+create function :PRIVATE_SCHEMA.set_updated_at() returns trigger as $$
 begin
   new.updated_at := current_timestamp;
   return new;
@@ -50,7 +49,7 @@ $$ language plpgsql;
 /*
  * Table private persons and private persons_accounts
  */
-create table if not exists app_private.persons (
+create table if not exists :PRIVATE_SCHEMA.persons (
   id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
   first_name text not null,
   last_name text not null,
@@ -60,27 +59,27 @@ create table if not exists app_private.persons (
 
 -- Trigger name: table-name_function-name
 create trigger persons_updated_at before update
-  on app_private.persons
+  on :PRIVATE_SCHEMA.persons
   for each row
-  execute procedure app_private.set_updated_at();
+  execute procedure :PRIVATE_SCHEMA.set_updated_at();
 
-create table if not exists app_private.persons_accounts (
-  person_id        uuid primary key references app_private.persons(id) on delete cascade,
+create table if not exists :PRIVATE_SCHEMA.persons_accounts (
+  person_id        uuid primary key references :PRIVATE_SCHEMA.persons(id) on delete cascade,
   email            text not null unique check (email ~* '^.+@.+\..+$'),
   password_hash    text not null
 );
 
-grant select on table app_private.persons to :POSTGRAPHILE_ANON_ROLE, :POSTGRAPHILE_PERSON_ROLE;
+grant select on table :PRIVATE_SCHEMA.persons to :ANON_ROLE, :PERSON_ROLE;
 
 /*
  * Table public persons
  */
 
-create table if not exists app_public.books (
+create table if not exists :PUBLIC_SCHEMA.books (
   id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
   name text not null,
   year integer not null,
   author_fullname text not null
 );
 
-grant select on table app_public.books to :POSTGRAPHILE_ANON_ROLE, :POSTGRAPHILE_PERSON_ROLE;
+grant select on table :PUBLIC_SCHEMA.books to :ANON_ROLE, :PERSON_ROLE;
