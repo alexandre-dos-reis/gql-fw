@@ -6,14 +6,15 @@
 -- - PERSON_ROLE: Role used bu postgrftaphile to an authenticated user.
 
 -- Common extensions
-CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA public;
-CREATE EXTENSION IF NOT EXISTS citext WITH SCHEMA public;
-CREATE EXTENSION IF NOT EXISTS pgcrypto WITH SCHEMA public;
+create extension if not exists plpgsql with schema pg_catalog;
+create extension if not exists "uuid-ossp" with schema public;
+create extension if not exists citext with schema public;
+create extension if not exists pgcrypto with schema public;
 
 -- Reset
 drop schema if exists :PUBLIC_SCHEMA cascade;
 drop schema if exists :PRIVATE_SCHEMA cascade;
+drop schema if exists :ADMIN_SCHEMA cascade;
 revoke all on schema public from public;
 alter default privileges revoke all on sequences from public;
 alter default privileges revoke all on functions from public;
@@ -29,12 +30,13 @@ grant all on schema public to :DATABASE_OWNER;
  */
 create schema :PUBLIC_SCHEMA;
 create schema :PRIVATE_SCHEMA;
+create schema :ADMIN_SCHEMA;
 
-grant usage on schema public, :PUBLIC_SCHEMA to :PERSON_ROLE;
+grant usage on schema public, :PUBLIC_SCHEMA, :ADMIN_SCHEMA to :PERSON_ROLE;
 grant usage on schema :PUBLIC_SCHEMA to :ANON_ROLE;
 
-alter default privileges in schema public, :PUBLIC_SCHEMA grant usage, select on sequences to :PERSON_ROLE;
-alter default privileges in schema public, :PUBLIC_SCHEMA grant execute on functions to :PERSON_ROLE;
+alter default privileges in schema public, :PUBLIC_SCHEMA, :ADMIN_SCHEMA grant usage, select on sequences to :PERSON_ROLE;
+alter default privileges in schema public, :PUBLIC_SCHEMA, :ADMIN_SCHEMA grant execute on functions to :PERSON_ROLE;
 
 /*
  * Function update_at
@@ -49,10 +51,14 @@ $$ language plpgsql;
 /*
  * Table private persons and private persons_accounts
  */
+drop type if exists :PRIVATE_SCHEMA.person_type;
+create type :PRIVATE_SCHEMA.person_type AS enum ('admin', 'user', 'org');
+
 create table if not exists :PRIVATE_SCHEMA.persons (
   id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
   first_name text not null,
   last_name text not null,
+  type :PRIVATE_SCHEMA.person_type not null,
   created_at timestamp not null default now(),
   updated_at timestamp not null default now()
 );
@@ -75,11 +81,17 @@ grant select on table :PRIVATE_SCHEMA.persons to :ANON_ROLE, :PERSON_ROLE;
  * Table public persons
  */
 
-create table if not exists :PUBLIC_SCHEMA.books (
+create table if not exists :PRIVATE_SCHEMA.books (
   id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
   name text not null,
   year integer not null,
   author_fullname text not null
 );
 
-grant select on table :PUBLIC_SCHEMA.books to :ANON_ROLE, :PERSON_ROLE;
+
+create or replace view :PUBLIC_SCHEMA.books as (
+  select * from :PRIVATE_SCHEMA.books
+);
+
+
+grant all on table :PUBLIC_SCHEMA.books to :PERSON_ROLE, :ANON_ROLE;

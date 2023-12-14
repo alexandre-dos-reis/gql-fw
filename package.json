@@ -4,7 +4,9 @@
   "description": "",
   "scripts": {
     "dev": "pnpm exec dotenv -- turbo dev",
-    "migrate": "pnpm exec dotenv -- pnpm --filter database run migrate"
+    "build": "pnpm exec dotenv -- turbo build",
+    "migrate": "pnpm exec dotenv -- pnpm --filter database run migrate",
+    "codegen:graphql": "pnpm exec dotenv -- turbo codegen:graphql"
   },
   "keywords": [],
   "author": "",

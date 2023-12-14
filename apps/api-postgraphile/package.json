@@ -1,14 +1,8 @@
 {
   "name": "api-postgraphile",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
   "scripts": {
     "dev": "sleep 2 && pnpm exec postgraphile"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "@graphile/simplify-inflection": "8.0.0-beta.3",
     "graphile-config": "0.0.1-beta.3",

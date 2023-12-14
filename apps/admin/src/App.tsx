@@ -1,28 +1,10 @@
-import {
-  Admin,
-  EditGuesser,
-  ListGuesser,
-  Resource,
-  fetchUtils,
-} from "react-admin";
-import postgrestRestProvider, {
-  IDataProviderConfig,
-  defaultPrimaryKeys,
-  defaultSchema,
-} from "@raphiniert/ra-data-postgrest";
+import { Admin, Resource } from "react-admin";
+import { dataProvider } from "./providers/dataProvider";
+import { bookResource } from "./resources/books";
 
-console.log(import.meta.env.VITE_ADMIN_POSTGREST_API);
-
-const config: IDataProviderConfig = {
-  apiUrl: import.meta.env.VITE_ADMIN_POSTGREST_API,
-  httpClient: fetchUtils.fetchJson,
-  defaultListOp: "eq",
-  primaryKeys: defaultPrimaryKeys,
-  schema: defaultSchema,
-};
 const App = () => (
-  <Admin dataProvider={postgrestRestProvider(config)}>
-    <Resource name="books" list={ListGuesser} edit={EditGuesser} />
+  <Admin dataProvider={dataProvider()}>
+    <Resource {...bookResource} />
   </Admin>
 );
 

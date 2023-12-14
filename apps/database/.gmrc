@@ -6,7 +6,8 @@
     ":ANON_ROLE": "!ENV",
     ":PERSON_ROLE": "!ENV",
     ":PUBLIC_SCHEMA": "!ENV",
-    ":PRIVATE_SCHEMA": "!ENV"
+    ":PRIVATE_SCHEMA": "!ENV",
+    ":ADMIN_SCHEMA": "!ENV"
   },
 
   "afterReset": [
