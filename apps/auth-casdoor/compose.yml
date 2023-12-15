@@ -3,3 +3,5 @@ services:
     ports:
       - 8000:8000
     image: casbin/casdoor-all-in-one:latest
+    # volumes:
+    #   - /path/to/init_data.json:/init_data.json
