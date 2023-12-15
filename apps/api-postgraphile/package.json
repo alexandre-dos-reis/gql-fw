@@ -1,7 +1,7 @@
 {
   "name": "api-postgraphile",
   "scripts": {
-    "dev": "sleep 2 && pnpm exec postgraphile"
+    "some": "sleep 2 && pnpm exec postgraphile"
   },
   "dependencies": {
     "@graphile/simplify-inflection": "8.0.0-beta.3",

@@ -1,0 +1,6 @@
+{
+  "name": "auth-casdoor",
+  "scripts": {
+    "dev": "docker compose up"
+  }
+}

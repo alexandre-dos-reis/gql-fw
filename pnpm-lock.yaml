@@ -30,9 +30,18 @@ importers:
       '@raphiniert/ra-data-postgrest':
         specifier: 2.0.0-alpha.3
         version: 2.0.0-alpha.3(ra-core@4.16.2)
+      casdoor-js-sdk:
+        specifier: ^0.11.0
+        version: 0.11.0
+      keycloak-js:
+        specifier: ^23.0.1
+        version: 23.0.1
       ra-data-graphql:
         specifier: ^4.16.2
         version: 4.16.2(graphql@16.8.1)(ra-core@4.16.2)(react-dom@18.2.0)(react@18.2.0)
+      ra-keycloak:
+        specifier: ^1.0.0
+        version: 1.0.0(@types/react@18.2.45)(ra-core@4.16.2)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)
       ra-postgraphile:
         specifier: ^6.1.2
         version: 6.1.2(graphql@16.8.1)(ra-data-graphql@4.16.2)(react-admin@4.16.2)
@@ -45,6 +54,9 @@ importers:
       react-dom:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
+      reactadmin-casdoor-authprovider:
+        specifier: ^1.0.1
+        version: 1.0.1
     devDependencies:
       '@types/react':
         specifier: ^18.2.43
@@ -90,6 +102,10 @@ importers:
         version: 5.0.0-beta.17(@dataplan/json@0.0.1-beta.11)(@dataplan/pg@0.0.1-beta.13)(grafast@0.1.1-beta.2)(grafserv@0.1.1-beta.4)(graphile-build-pg@5.0.0-beta.16)(graphile-build@5.0.0-beta.12)(graphile-config@0.0.1-beta.3)(graphql@16.8.1)(pg-sql2@5.0.0-beta.4)(pg@8.11.3)(tamedevil@0.0.0-beta.3)
 
   apps/api-postgrest: {}
+
+  apps/auth: {}
+
+  apps/auth-casdoor: {}
 
   apps/database:
     dependencies:
@@ -2734,7 +2750,6 @@ packages:
 
   /base64-js@1.5.1:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
-    dev: true
 
   /big-integer@1.6.52:
     resolution: {integrity: sha512-QxD8cf2eVqJOOz63z6JIN9BzvVs/dlySa5HGSBH5xtR8dPteIRQnBxxKqkNTiT6jbDTF6jAfrd4oMcND9RGbQg==}
@@ -2852,6 +2867,12 @@ packages:
       tslib: 2.6.2
       upper-case-first: 2.0.2
     dev: true
+
+  /casdoor-js-sdk@0.11.0:
+    resolution: {integrity: sha512-6MdULUb/UfyvXtS35DtvnbJ7K8ABGNFlokwpZpZuMEWl3WU89MWJgL872T/kZV8+Yjl3hVBXdg9256uW3v66sg==}
+    dependencies:
+      js-pkce: 1.4.0
+    dev: false
 
   /chalk@2.4.2:
     resolution: {integrity: sha512-Mti+f9lpJNcwF4tWV8/OrTTtF1gZi+f8FqlyAdouralcFWFQWF2+NgCHShjkCb+IFBLq9buZwE1xckQU4peSuQ==}
@@ -3081,6 +3102,10 @@ packages:
       path-key: 3.1.1
       shebang-command: 2.0.0
       which: 2.0.2
+
+  /crypto-js@4.2.0:
+    resolution: {integrity: sha512-KALDyEYgpY+Rlob/iriUtjV6d5Eq+Y191A5g4UqLAi8CyGP9N1+FdVbkc1SxKc2r4YAYqG8JzO2KGL+AizD70Q==}
+    dev: false
 
   /css-mediaquery@0.1.2:
     resolution: {integrity: sha512-COtn4EROW5dBGlE/4PiKnh6rZpAPxDeFLaEEwt4i10jpDMFt2EhQGS79QmmrO+iKCHv0PU/HrOWEhijFd1x99Q==}
@@ -4386,6 +4411,20 @@ packages:
     resolution: {integrity: sha512-GPExOkcMsCLBTi1YetY2LmkoY559fss0+0KVa6kOfb2YFe84nAM7Nm/XzuZozah4iHgmBGrCOHL5/cy670SBRw==}
     dev: true
 
+  /js-pkce@1.4.0:
+    resolution: {integrity: sha512-ztPzIgjQ+hY2uvwsTi625Yt/123NODAInGg2Y7aQLlKpNpD16A3WePjKyY2+B8WCoZy1cGG4xC9C68Dt2ZB8iQ==}
+    dependencies:
+      crypto-js: 4.2.0
+    dev: false
+
+  /js-sha256@0.10.1:
+    resolution: {integrity: sha512-5obBtsz9301ULlsgggLg542s/jqtddfOpV5KJc4hajc9JV8GeY2gZHSVpYBn4nWqAUTJ9v+xwtbJ1mIBgIH5Vw==}
+    dev: false
+
+  /js-sha256@0.9.0:
+    resolution: {integrity: sha512-sga3MHh9sgQN2+pJ9VYZ+1LPwXOxuBJBA5nrR5/ofPfuiJBE2hnjsaN8se8JznOmGLN2p49Pe5U/ttafcs/apA==}
+    dev: false
+
   /js-sha3@0.8.0:
     resolution: {integrity: sha512-gF1cRrHhIzNfToc802P800N8PpXS+evLLXfsVpowqmAFR9uwbi89WvXg2QspOmXL8QL86J4T1EpFu+yUkwJY3Q==}
     dev: false
@@ -4482,6 +4521,30 @@ packages:
     dependencies:
       jwa: 1.4.1
       safe-buffer: 5.2.1
+    dev: false
+
+  /jwt-decode@3.1.2:
+    resolution: {integrity: sha512-UfpWE/VZn0iP50d8cz9NrZLM9lSWhcJ+0Gt/nm4by88UL+J1SiKN8/5dkjMmbEzwL2CAe+67GsegCbIKtbp75A==}
+    dev: false
+
+  /jwt-decode@4.0.0:
+    resolution: {integrity: sha512-+KJGIyHgkGuIq3IEBNftfhW/LfWhXUIY6OmyVWjliu5KH1y0fw7VQ8YndE2O4qZdMSd9SqbnC8GOcZEy0Om7sA==}
+    engines: {node: '>=18'}
+    dev: false
+
+  /keycloak-js@19.0.3:
+    resolution: {integrity: sha512-mzCBxrzfl+vB551Q7MB+T9+40IHU4i0a6g1eTatzeEGrQMis5m/BqvPC3kxTsI+/LxHbB9XYQE3u9SlWKDHQCw==}
+    dependencies:
+      base64-js: 1.5.1
+      js-sha256: 0.9.0
+    dev: false
+
+  /keycloak-js@23.0.1:
+    resolution: {integrity: sha512-n7bF7GGrxmzB6mveXYhVoKDZv96PEtrn89/2qSNSCreBKovW/bGcrB6WFBiUOzdWoRW03mDYcU8sUfvELiBPPw==}
+    dependencies:
+      base64-js: 1.5.1
+      js-sha256: 0.10.1
+      jwt-decode: 4.0.0
     dev: false
 
   /keyv@4.5.4:
@@ -5315,6 +5378,23 @@ packages:
       - react-router-dom
     dev: false
 
+  /ra-keycloak@1.0.0(@types/react@18.2.45)(ra-core@4.16.2)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-DMMerEnH+MECrJZHP3J1aZSB2rxcrEqRzG4DOuePLotDohfd5a0IWIDXSvEcUKPQvzv8VEKG8ujkLP5uWso/Ng==}
+    peerDependencies:
+      ra-core: '*'
+    dependencies:
+      jwt-decode: 3.1.2
+      keycloak-js: 19.0.3
+      ra-core: 4.16.2(history@5.3.0)(react-dom@18.2.0)(react-hook-form@7.49.2)(react-router-dom@6.20.1)(react-router@6.20.1)(react@18.2.0)
+      react-admin: 4.16.2(@types/react@18.2.45)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)
+    transitivePeerDependencies:
+      - '@types/react'
+      - react
+      - react-dom
+      - react-is
+      - react-native
+    dev: false
+
   /ra-language-english@4.16.2(history@5.3.0)(react-dom@18.2.0)(react-hook-form@7.49.2)(react-router-dom@6.20.1)(react-router@6.20.1)(react@18.2.0):
     resolution: {integrity: sha512-WyzYUbhLd6OX9wtS8v4Z/5ipyjRyLQdAzN2lEsHikTt5zf+IB1OJZLFDbMbuOG3dyampNclXVhwnOzwp+4OpZA==}
     dependencies:
@@ -5528,6 +5608,10 @@ packages:
     engines: {node: '>=0.10.0'}
     dependencies:
       loose-envify: 1.4.0
+    dev: false
+
+  /reactadmin-casdoor-authprovider@1.0.1:
+    resolution: {integrity: sha512-lLMMgjklCTX07su7WE7xzt0hmFuMCKWVldxZ/G/bwcVo0sCGPcuIGktLV0I4VZGjB3E0pwTBTl/voeksN9kZiA==}
     dev: false
 
   /readable-stream@3.6.2:

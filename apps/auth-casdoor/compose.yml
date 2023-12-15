@@ -1,0 +1,5 @@
+services:
+  auth-casdoor:
+    ports:
+      - 8000:8000
+    image: casbin/casdoor-all-in-one:latest

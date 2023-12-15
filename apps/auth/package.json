@@ -1,0 +1,6 @@
+{
+  "name": "auth",
+  "scripts": {
+    "some": "docker compose up"
+  }
+}
