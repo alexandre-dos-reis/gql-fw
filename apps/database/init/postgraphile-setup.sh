@@ -1,8 +1,6 @@
 #!/bin/bash
 set -e
 
-# Remove alter schema public
-
 if [[ "$NODE_ENV" == "development" ]]; then
 	echo -e "\nPlaying dev script :\n"
 	psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
@@ -18,9 +16,9 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
 
 	  CREATE ROLE ${AUTHENTICATOR_ROLE} WITH LOGIN PASSWORD '${AUTHENTICATOR_PASSWORD}' NOINHERIT;
 
-	  CREATE ROLE ${ANON_ROLE};
-	  GRANT ${ANON_ROLE} TO ${AUTHENTICATOR_ROLE} nologin;
+	  CREATE ROLE ${ANON_ROLE} nologin;
+	  GRANT ${ANON_ROLE} TO ${AUTHENTICATOR_ROLE};
 
-	  CREATE ROLE ${PERSON_ROLE};
-	  GRANT ${PERSON_ROLE} TO ${AUTHENTICATOR_ROLE} nologin;
+	  CREATE ROLE ${PERSON_ROLE} nologin;
+	  GRANT ${PERSON_ROLE} TO ${AUTHENTICATOR_ROLE};
 EOSQL

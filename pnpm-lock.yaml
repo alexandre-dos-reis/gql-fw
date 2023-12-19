@@ -89,6 +89,15 @@ importers:
         specifier: ^5.0.8
         version: 5.0.8(@types/node@20.10.4)
 
+  apps/api-graphile-worker:
+    dependencies:
+      graphile-config:
+        specifier: 0.0.1-beta.3
+        version: 0.0.1-beta.3
+      graphile-worker:
+        specifier: ^0.16.0
+        version: 0.16.0(typescript@5.3.3)
+
   apps/api-postgraphile:
     dependencies:
       '@graphile/simplify-inflection':
@@ -2236,6 +2245,12 @@ packages:
     resolution: {integrity: sha512-myfUej5naTBWnqOCc/MdVOLVjXUXtIA+NpDrDBKJtLLg2shUjBu3cZmB/85RyitKc55+lUUyl7oRfLOvkr2hsw==}
     dev: true
 
+  /@types/debug@4.1.12:
+    resolution: {integrity: sha512-vIChWdVG3LG1SMxEvI/AK+FWJthlrqlTu7fbrlywTkkaONwk/UAGaULXRlf8vkzFBLVm0zkMdCquhL5aOjhXPQ==}
+    dependencies:
+      '@types/ms': 0.7.34
+    dev: false
+
   /@types/interpret@1.1.3:
     resolution: {integrity: sha512-uBaBhj/BhilG58r64mtDb/BEdH51HIQLgP5bmWzc5qCtFMja8dCk/IOJmk36j0lbi9QHwI6sbtUNGuqXdKCAtQ==}
     dependencies:
@@ -2256,6 +2271,10 @@ packages:
 
   /@types/json5@0.0.30:
     resolution: {integrity: sha512-sqm9g7mHlPY/43fcSNrCYfOeX9zkTTK+euO5E6+CVijSMm5tTjkVdwdqRkY3ljjIAf8679vps5jKUoJBCLsMDA==}
+    dev: false
+
+  /@types/ms@0.7.34:
+    resolution: {integrity: sha512-nG96G3Wp6acyAgJqGasjODb+acrI7KltPiRxzHPXnP3NgI28bpQDRv53olbqGXbfcgF5aiiHmO3xpwEpS5Ld9g==}
     dev: false
 
   /@types/node@14.18.63:
@@ -2619,7 +2638,6 @@ packages:
 
   /argparse@2.0.1:
     resolution: {integrity: sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==}
-    dev: true
 
   /array-buffer-byte-length@1.0.0:
     resolution: {integrity: sha512-LPuwb2P+NrQw3XhxGc36+XSvuBPopovXYTR9Ew++Du9Yb/bx5AzBfrIsBoj0EZUifjQU+sHL21sseZ3jerWO/A==}
@@ -3078,7 +3096,6 @@ packages:
       parse-json: 5.2.0
       path-type: 4.0.0
       typescript: 5.3.3
-    dev: true
 
   /cross-fetch@3.1.8:
     resolution: {integrity: sha512-cvA+JwZoU0Xq+h6WkMvAUqPEYy92Obet6UdKLfW60qn99ftItKjB5T+BkyWOFWe2pUyfQ+IJHmpOTznqk1M6Kg==}
@@ -3900,6 +3917,23 @@ packages:
       - supports-color
     dev: false
 
+  /graphile-config@0.0.1-beta.6:
+    resolution: {integrity: sha512-TzLPvp89MDJhQ57/h3IGTV0++zaIJeRLUHh6n0lbeEAX2S7vaWBDFmIfXWla/gejjER4fyRT/vK4617Be45Zcg==}
+    engines: {node: '>=16'}
+    dependencies:
+      '@types/interpret': 1.1.3
+      '@types/node': 20.10.4
+      '@types/semver': 7.5.6
+      chalk: 4.1.2
+      debug: 4.3.4
+      interpret: 3.1.1
+      semver: 7.5.4
+      tslib: 2.6.2
+      yargs: 17.7.2
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
   /graphile-migrate@1.4.1:
     resolution: {integrity: sha512-yupLO7kPC8tPu9QjZbbd740bKvKjziZROhpsSVOBmIM4KKXpir9j1uOpekj6WzxQ+L1VlL3r/C6VgjYPP6QnqA==}
     hasBin: true
@@ -3949,6 +3983,26 @@ packages:
       tslib: 2.6.2
     transitivePeerDependencies:
       - supports-color
+    dev: false
+
+  /graphile-worker@0.16.0(typescript@5.3.3):
+    resolution: {integrity: sha512-Z77KoDo2gIoh4gjDhVObe8+wm10FJ/W9tb4qJVnzZPVX+7y2CLaj6VhIKWkol8Ay937dbtQGlcYZq8s0wg+J6g==}
+    engines: {node: '>=14.0.0'}
+    hasBin: true
+    dependencies:
+      '@graphile/logger': 0.2.0
+      '@types/debug': 4.1.12
+      '@types/pg': 8.10.9
+      cosmiconfig: 8.3.6(typescript@5.3.3)
+      graphile-config: 0.0.1-beta.6
+      json5: 2.2.3
+      pg: 8.11.3
+      tslib: 2.6.2
+      yargs: 17.7.2
+    transitivePeerDependencies:
+      - pg-native
+      - supports-color
+      - typescript
     dev: false
 
   /graphql-config@5.0.3(@types/node@20.10.4)(graphql@16.8.1)(typescript@5.3.3):
@@ -4437,7 +4491,6 @@ packages:
     hasBin: true
     dependencies:
       argparse: 2.0.1
-    dev: true
 
   /jsesc@2.5.2:
     resolution: {integrity: sha512-OYu7XEzjkCQ3C5Ps3QIZsQfNpqoJyZZA99wd9aWd05NCtC5pWOkShK2mkL6HXQR6/Cy2lbNdPlZBpuQHXE63gA==}
@@ -6180,7 +6233,6 @@ packages:
     resolution: {integrity: sha512-pXWcraxM0uxAS+tN0AG/BF2TyqmHO014Z070UsJ+pFvYuRSq8KH8DmWpnbXe0pEPDHXZV3FcAbJkijJ5oNEnWw==}
     engines: {node: '>=14.17'}
     hasBin: true
-    dev: true
 
   /ua-parser-js@1.0.37:
     resolution: {integrity: sha512-bhTyI94tZofjo+Dn8SN6Zv8nBDvyXTymAdM3LDI/0IboIUwTu1rEhW7v2TfiVsoYWgkQ4kOVqnI8APUFbIQIFQ==}

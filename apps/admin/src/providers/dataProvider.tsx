@@ -1,6 +1,4 @@
-import postgrestRestProvider, {
-  defaultPrimaryKeys,
-} from "@raphiniert/ra-data-postgrest";
+import postgrestRestProvider from "@raphiniert/ra-data-postgrest";
 import { fetchUtils } from "react-admin";
 
 const httpClient = (
@@ -22,6 +20,8 @@ export const dataProvider = () =>
     apiUrl: import.meta.env.VITE_ADMIN_POSTGREST_API,
     httpClient,
     defaultListOp: "eq",
-    primaryKeys: defaultPrimaryKeys,
+    primaryKeys: new Map([
+      ["product_translations", ["product_id", "language_code"]],
+    ]),
     schema: () => import.meta.env.VITE_ADMIN_POSTGREST_SCHEMA,
   });

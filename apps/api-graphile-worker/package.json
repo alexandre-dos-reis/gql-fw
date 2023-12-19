@@ -1,0 +1,11 @@
+{
+  "name": "api-graphile-worker",
+  "type": "module",
+  "scripts": {
+    "dev": "sleep 5 && pnpm exec graphile-worker"
+  },
+  "dependencies": {
+    "graphile-config": "0.0.1-beta.3",
+    "graphile-worker": "^0.16.0"
+  }
+}
