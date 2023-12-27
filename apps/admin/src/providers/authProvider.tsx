@@ -43,16 +43,16 @@ const initAuthProvider = (cfg: typeof sdkConfig): AuthProvider => {
       return Promise.resolve();
     },
     getIdentity: async () => {
-      // const token = localStorage.getItem("token");
-      // if (token) {
-      //   const decoded = jwtDecode(token);
-      //   console.log(decoded);
-      // }
-
-      return Promise.resolve({
-        id: "user",
-        fullName: "John Doe",
-      });
+      const token = localStorage.getItem("token");
+      if (token) {
+        const decoded = jwtDecode<{ displayName: string; sub: string }>(token);
+        return Promise.resolve({
+          id: decoded.sub,
+          fullName: decoded.displayName,
+        });
+      } else {
+        return Promise.reject();
+      }
     },
     getPermissions: async () => Promise.resolve(1),
     handleCallback: async () => {
