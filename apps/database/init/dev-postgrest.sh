@@ -2,7 +2,7 @@
 set -e
 
 if [[ "$NODE_ENV" == "development" ]]; then
-	echo -e "\nPlaying dev script :\n"
+	echo -e "\n Now when database changes, postgrest update its schema :\n"
 	psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
 		CREATE OR REPLACE FUNCTION pgrst_ddl_watch() RETURNS event_trigger AS $$
 		DECLARE
