@@ -13,6 +13,7 @@
     "@apollo/react-hooks": "^4.0.0",
     "@raphiniert/ra-data-postgrest": "2.0.0-alpha.3",
     "casdoor-js-sdk": "^0.11.0",
+    "jwt-decode": "^4.0.0",
     "keycloak-js": "^23.0.1",
     "ra-data-graphql": "^4.16.2",
     "ra-keycloak": "^1.0.0",

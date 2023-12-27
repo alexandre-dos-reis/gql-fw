@@ -15,13 +15,12 @@ const httpClient = (
   return fetchUtils.fetchJson(url, options);
 };
 
-export const dataProvider = () =>
-  postgrestRestProvider({
-    apiUrl: import.meta.env.VITE_ADMIN_POSTGREST_API,
-    httpClient,
-    defaultListOp: "eq",
-    primaryKeys: new Map([
-      ["product_translations", ["product_id", "language_code"]],
-    ]),
-    schema: () => import.meta.env.VITE_ADMIN_POSTGREST_SCHEMA,
-  });
+export const dataProvider = postgrestRestProvider({
+  apiUrl: import.meta.env.VITE_ADMIN_POSTGREST_API,
+  httpClient,
+  defaultListOp: "eq",
+  primaryKeys: new Map([
+    ["product_translations", ["product_id", "language_code"]],
+  ]),
+  schema: () => import.meta.env.VITE_ADMIN_POSTGREST_SCHEMA,
+});

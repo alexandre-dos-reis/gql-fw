@@ -33,6 +33,9 @@ importers:
       casdoor-js-sdk:
         specifier: ^0.11.0
         version: 0.11.0
+      jwt-decode:
+        specifier: ^4.0.0
+        version: 4.0.0
       keycloak-js:
         specifier: ^23.0.1
         version: 23.0.1
