@@ -1,6 +1,6 @@
 const preset = {
   worker: {
-    connectionString: "postgres://alex:alex@localhost:9854/main",
+    connectionString: process.env.GW_DATABASE_URL,
     maxPoolSize: 10,
     pollInterval: 2000,
     preparedStatements: true,
