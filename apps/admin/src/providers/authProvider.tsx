@@ -1,7 +1,7 @@
 import Sdk from "casdoor-js-sdk";
 import { SdkConfig } from "casdoor-js-sdk/lib/cjs/sdk";
 import { AuthProvider } from "react-admin";
-import { jwtDecode } from "jwt-decode";
+import { jwtDecode, JwtPayload } from "jwt-decode";
 
 const sdkConfig: SdkConfig & { clientSecret: string } = {
   serverUrl: import.meta.env.VITE_ADMIN_AUTH_SERVER_URL,
@@ -43,12 +43,14 @@ const initAuthProvider = (cfg: typeof sdkConfig): AuthProvider => {
       return Promise.resolve();
     },
     getIdentity: async () => {
-      const token = localStorage.getItem("token");
+      const token = jwtDecode<
+        JwtPayload & { displayName: string; avatar: string; sub: string }
+      >(localStorage.getItem("token") as string);
       if (token) {
-        const decoded = jwtDecode<{ displayName: string; sub: string }>(token);
         return Promise.resolve({
-          id: decoded.sub,
-          fullName: decoded.displayName,
+          id: token.sub,
+          fullName: token.displayName,
+          avatar: token.avatar,
         });
       } else {
         return Promise.reject();
